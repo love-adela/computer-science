@@ -362,7 +362,7 @@ Technology mapping으로 Boolean exponential로 표현해서 물리적인 회로
  0  1 | 0 | 0  | 0  | 0  | 1  | 1  | 1  | 1 | 0  | 0  | 0   | 0  | 1   | 1 |  1  | 1  
  1  0 | 0 | 0  | 1  | 1  | 0  | 0  | 1  | 1 | 0  | 0  | 1   | 1  | 0   | 0 |  1  | 1
  1  1 | 0 | 1  | 0  | 1  | 0  | 1  | 0  | 1 | 0  | 1  | 0   | 1  | 0   | 1 |  0  | 1
- - |  - | 0 | and| -  | X  | -  | Y  | xor| or| nor| -  | not | -  | not | - |nand | 1
+  \- |  - | 0 | and| -  | X  | -  | Y  | xor| or| nor| -  | not | -  | not | - |nand | 1
 
 - 1-bit full adder
 
