@@ -1,7 +1,7 @@
 # Week 1, Mon
 ---
 
-* 학습목표
+* 이 Course의 학습목표
   - Digital Logic Design에 대해서 배운다.
   - Digital Abstraction
 
