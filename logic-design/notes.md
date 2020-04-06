@@ -557,3 +557,80 @@ A B | F
   * 카너프맵의 양쪽 끝은 연결되어있다. (토폴로지가 도넛 모양임)
 
 * 변수가 5개 넘어가면 카너프맵으로 시각화 하는 것도 어려움. 대신 컴퓨터가 해줌.
+
+# Week 4, Mon
+
+## 3.1 Working with combinational logic
+
+Boolean cubes나 K-map로 논리식을 표현할 수도 있지만, 시스템이나 알고리즘적으로 접근할 수 있다.
+
+### 3.1.1 Simplification
+
+(1) 2-level simplification
+
+최적화한 결과가 2-level logic 이기 때문에 2-level simplification이라고 함.
+
+(2) Exploiting don't cares
+
+input의 범위는 0부터 3. 2bit-by-2bit multiplier that generates 4 bit output.
+
+### 3.1.2 Design example : 2*2 bit comparator
+
+- Block diagram에서 2bits input을 볼 수 있다. 첫 번째  input은 A1, A2로 표시할거고, 두 번째 input은 B1, B2로 표시할 것임. 
+- 4개의 input으로 표현할 수 있는 number이 0~3까지라고 할 때, loss가 없는 전제 하에 output은 0~9까지.
+-   
+- 
+
+
+P4
+
+P2
+원래는 각각의 
+Unification law 에 따라서 하나의 공통된 것이 있고.
+
+P1
+2 literals이 있고 인접한 2 min-term이 있음
+
+* Example
+  * Design example: bCD increment by 1
+
+    * 모호하게
+    * BCD는 Binary Coded Decimal의 준말이고 Decimal number을 binary bit 로 표현하는 방법. 0부터 9까지를 표현한다. 즉 A~F까지 표현하고 나머지는 Don't care.
+
+    * 1 ~ 0 까지는
+    * 나머지는 unused고 Don't care.
+
+이 function을 간소화시키는 방법
+* Boolean expression으로 
+
+
+* Design example: BCD increment by 1
+  * O8 = I4 I2 I1 + I8 + I1'
+  * O4 = minimal set 에 대한 subcube 를 
+
+## 2-level simplification에 대한 일반화
+
+## Definition of terms for 2-level simplification
+
+### Terms
+* Implicant: On-set (input combination이 True가 되는 것들) or DC-set.
+  * subcube
+  * 모든 implicant는 1 또는 0으로만 각각 구성되어야 함.
+* Prime Implicant : 특별한 경우의 implicant. 
+* Essential Prime Implicant
+  *  Implicant은 Prime Implicant를, Prime Implicant 는 Essential Prime Implicant 을 포함
+* Minimum cover : Set of prime implicants to cover the entire on-set.
+
+### Algorithm for two-level simplification
+  1. ON-set 요소 고르기
+  2. 'maximal' groupings of 1s and Xs adjacent to that element
+  3. Repeat Steps 1 and 2
+  4. Revisit the 1s in the K-map
+  5. if there remain
+
+### Algorithm for two-level simplification
+
+### Hardware Description Languages
+
+* Verilog
+* schematic(회로도) 
