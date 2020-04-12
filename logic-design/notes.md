@@ -562,7 +562,8 @@ A B | F
 
 ## 3.1 Working with combinational logic
 
-Boolean cubes나 K-map로 논리식을 표현할 수도 있지만, 시스템이나 알고리즘적으로 접근할 수 있다.
+Boolean minimization 과정을 배울 것이다.
+Boolean cubes나 K-map로 논리식을 표현할 수도 있지만, 이번에는 시스템이나 알고리즘적으로 접근해볼 것임.
 
 ### 3.1.1 Simplification
 
@@ -574,18 +575,107 @@ Boolean cubes나 K-map로 논리식을 표현할 수도 있지만, 시스템이�
 
 input의 범위는 0부터 3. 2bit-by-2bit multiplier that generates 4 bit output.
 
-### 3.1.2 Design example : 2*2 bit comparator
+(3) Algorithm for simplification
 
-- Block diagram에서 2bits input을 볼 수 있다. 첫 번째  input은 A1, A2로 표시할거고, 두 번째 input은 B1, B2로 표시할 것임. 
-- 4개의 input으로 표현할 수 있는 number이 0~3까지라고 할 때, loss가 없는 전제 하에 output은 0~9까지.
--   
-- 
+### 3.1.2 Design example : two-bit comparator
 
+two-bit comparator는 ~.
+
+      * msb(most significant bit): 2진수의 여러비트들 중 가장 큰 값에 해당하는, 즉 가장 왼쪽에 있는 비트
+      * lsb(least significant bit): 2진수의 여러비트들 중 가장 작은 값이자 가장 오른쪽의 비트
+
+      * LT : Lesser Than
+      * EQ : Equal
+      * GT : Greater Than
+
+3.1.2.1 Block diagram for two-bit comparator
+
+* input: 2bits input  
+  * 첫 번째 input : A1, A2
+  * 두 번째 input : B1, B2
+
+* output: 2bits output
+  * 첫 번째 output : P1, P2
+  * 두 번째 output : P4, P8
+
+3.1.2.2 Truth table for two-bit comparator
+
+A2 A1 B2 B1 | P8 P4 P2 P1
+------------|------------
+0   0  0  0 |  0  0  0  0
+0   0  0  1 |  0  0  0  0
+0   0  1  0 |  0  0  0  0
+0   0  1  1 |  0  0  0  0
+0   1  0  0 |  0  0  0  0
+0   1  0  1 |  0  0  0  1
+0   1  1  0 |  0  0  1  0
+0   1  1  1 |  0  0  1  1
+1   0  0  0 |  0  0  0  0
+1   0  0  1 |  0  0  1  0
+1   0  1  0 |  0  1  0  0
+1   0  1  1 |  0  1  1  0
+1   1  0  0 |  0  0  0  0
+1   1  0  1 |  0  0  1  1
+1   1  1  0 |  0  1  1  0
+1   1  1  1 |  1  0  0  1
+
+3.1.2.3 K-map for two-bit comparator
+
+* LT = A'B'D + A'C + B'CD
+* EQ
+  * = A'B'C'D' + A'B'C'D + ABCD + AB'CD' 
+  * =  (AC+A'C')BD + (AC+A'C')B'D' = (AC+A'C')(BD+B'D')
+  * = `(Axnor C) * (B xnor D)`
+* GT = BC'D' + AC' + ABD'
+
+3.1.2.4 결론
+
+XOR을 사용할 때와 사용하지 않을 때 모두 EQ 구현이 달라지게 되고 복잡도도 높지만, XNOR은 최소한 3개의 간단한 게이트로 구현이 가능하다. 
+
+### 3.1.3 Design example: 2X2 bit multiplier
+
+2X2 bit multiplier는 4비트짜리 출력을 발생시킨다. 이 때의 MSB는 P8, LSB는 P1이다. 입력 A2와 B2는 각각 MSB.
+
+4개의 input으로 표현할 수 있는 number이 0~3까지라고 할 때, loss가 없는 전제 하에 two-bit comparator 로 표현할 수 있는 number 범위는 0~9까지다.
+
+3.1.3.1 Block Diagram
+
+3.1.3.2 Truth table
+
+3.1.3.3 K-map
+
+
+### 3.1.3 BCD increment by 1
+
+3.1.3.1 Block diagram and turth table
+
+input을 분명하게 넣어주는 특징이 있음.
+(PPT 9페이지 예시 참고) +1 연산을 하는 다이어그램에 4비트짜리 BCD number에 해당하는 10개의 숫자를 0~9까지, A~F로 input과 output을 표현한다. 나머지 unused input에 대한 output은 DC-set.
+
+이 식을 간소화할 수 있는 방법? Directly transform SoP, PoS 를 AND, OR 게이트로 만든다거나.
+
+3.1.3.2 K-map
+
+----
+
+O8: 1의 자리를. If you can make bigger. simplify form of the boolean expression. This is the kind of biggest subcube that actually contains the 1. 
+- I4I2I1 + I8I1'
+
+O4: biggest subcube that acontains the 1, 
+I3I2' + I4I1' + I4'I2I1
+
+
+* 10개의 숫자
+
+O8 
+O4
+O2
+O1
 
 P4
 
 P2
-원래는 각각의 
+원래는 각각의
 Unification law 에 따라서 하나의 공통된 것이 있고.
 
 P1
@@ -593,9 +683,12 @@ P1
 
 * Example
   * Design example: bCD increment by 1
+  
+    * BCD
+      * Binary Coded Decimal의 준말이고 Decimal number을 binary bit 로 표현하는 방법.
+      * 0부터 9까지를 표현한다. 즉 A~F까지 표현하고 나머지는 Don't care.
+      * 요즘 자주 쓰이는 것은 아니고 legacy support increment에 쓰임.
 
-    * 모호하게
-    * BCD는 Binary Coded Decimal의 준말이고 Decimal number을 binary bit 로 표현하는 방법. 0부터 9까지를 표현한다. 즉 A~F까지 표현하고 나머지는 Don't care.
 
     * 1 ~ 0 까지는
     * 나머지는 unused고 Don't care.
@@ -606,31 +699,104 @@ P1
 
 * Design example: BCD increment by 1
   * O8 = I4 I2 I1 + I8 + I1'
-  * O4 = minimal set 에 대한 subcube 를 
+  * O4 = minimal set 에 대한 subcube 를..
 
-## 2-level simplification에 대한 일반화
+---
 
-## Definition of terms for 2-level simplification
+## 3.1.4 Definition of terms for 2-level simplification
 
-### Terms
-* Implicant: On-set (input combination이 True가 되는 것들) or DC-set.
-  * subcube
+### 3.1.4.1 Terms
+
+* Implicant
+  * On-set과 (input combination이 True가 되는 것들)과  DC-set으로만 이뤄진 subcube
   * 모든 implicant는 1 또는 0으로만 각각 구성되어야 함.
-* Prime Implicant : 특별한 경우의 implicant. 
+* Prime Implicant
+  * 다른 Larger subcube에 합쳐질 수 없는 경우의 implicant.
 * Essential Prime Implicant
-  *  Implicant은 Prime Implicant를, Prime Implicant 는 Essential Prime Implicant 을 포함
-* Minimum cover : Set of prime implicants to cover the entire on-set.
-
-### Algorithm for two-level simplification
-  1. ON-set 요소 고르기
-  2. 'maximal' groupings of 1s and Xs adjacent to that element
-  3. Repeat Steps 1 and 2
-  4. Revisit the 1s in the K-map
-  5. if there remain
+  * Implicant은 Prime Implicant를, Prime Implicant 는 Essential Prime Implicant 을 포함
+* Optimization Objective
+  * Implicant들을 모두 Prime implicants 로 키우기
+  * 전체 ON-set을 최소한의 Prime implicants로 덮기 (minimum cover)
 
 ### Algorithm for two-level simplification
 
-### Hardware Description Languages
+  1. 카르노맵에 ON-set, OFF-set, DC-set 그리기
+  2. 모든 Prime Implicants 를 찾는다.
+    1. 카르노맵의 맨 윗줄과 맨 아랫줄, 맨 왼쪽줄과 맨 오른쪽줄, 각 코너들이 모두 연결되어 있음을 이용.
+  3. Essential Prime Implicant 찾기
+    - EPI는 무조건 결과에 포함되어야 함.
+  4. EPI로 커버되지 않는 1들을 제일 적은 수의 Prime Implicant 로 덮어볼 것 (NP-hard)
+
+### Algorithm for two-level simplification
+
+### 3.4 Hardware Description Languages(HDL)
 
 * Verilog
-* schematic(회로도) 
+* schematic(회로도)
+
+* 
+HDL의 역사
+
+    Abel, 약 1983
+    ISP, 약 1977
+    Verilog, 약 1985
+        파스칼, C와 유사한 문법
+        코드가 짧고 작성하기 쉬움
+        IEEE 표준
+    VHDL, 약 1987
+        Ada와 유사한 문법
+        Very general하지만 너무 verbose함
+        IEEE 표준
+
+Abel, ISP는 프로토타입이고 Verilog와 VHDL은 널리 쓰임. Verilog가 한국 미국 등지에선 더 많이 쓰이는데 VHDL은 유럽에서 많이 쓰임
+
+하시설에서 안배운거
+
+    $display: 콘솔에 글자 찍는 명령어
+    $finish: 시뮬레이션 멈추는 명령어
+    Assign에도 delay를 줄 수 있다. Propagation Delay를 묘사 가능
+
+* synthesis
+
+a process of compiling behavior of model into structure model.
+
+highlevel chance to .
+
+and/or/nand 같은 comblex operation이 break down 되었을 때,
+
+lowering number of structure.
+behavior model : xor
+real hardware what can be implemented.
+
+timing verification : sequential logic 을 아직 배우진 않았지만, 이건 motional clock에서 worst case delay between two, and three clock을 이 설계가 제대로 되었는지 확인하는 용도. 
+
+cell phone, labtop 같은 2~4GHZ 같은 . clock speed.
+
+
+Deisgn process : iterative process.
+
+You're system is not disatisfied with certain input. You need to optimize the program to reduce the time. 
+
+### HDLs vs programming languages(python, c++, c, java, ...)
+
+기본적으로 HDLS는 multiple instantiation of multiple components of the same type
+- specify interconnections between modules via schematic
+- hierachy of modules
+  
+* Notable differencies
+  * assignment
+    * C 언어에서 `z=x^y` 같은 assignment 는 HDLs과 다른 점.
+      * continuous assignment 는 조합논리
+      * propagation delay 
+      * timing of signals is important. It determins when does computation have its effect.
+      * malloc?
+      * new?
+
+NAND gate가 AND gate보다 좀 더 싸다
+  - NAND : 4개 transistor
+  - AND : NAND(4개) + NOT (2개) = 6개
+
+
+always는 continuous 가 아님.
+
+트랜지스터의 동작원리 
