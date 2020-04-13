@@ -799,4 +799,51 @@ NAND gate가 AND gate보다 좀 더 싸다
 
 always는 continuous 가 아님.
 
-트랜지스터의 동작원리 
+트랜지스터의 동작원리
+
+---
+# Week5, Mon
+
+## Time response in combinational networks
+
+### Gate delays
+
+Dynamic behavior:
+
+Static behavior
+
+### Timing Waveforms
+
+* Waveforms
+
+* Simulation tools
+  * VIVADO
+  * ISE
+
+* Gatedelay : input change 부터 output change까지 걸린 시간
+
+
+* rise time
+  
+* fall time
+
+* pulse width : 출력 전압이 낮거나 높은채로 유지되는 시간
+
+# Lecture 4
+
+## Combinational Logic Technologies
+
+[개요] 
+* Standard gates (random logic)
+  * gate packages
+  * cell libraries
+* Regular logic : 진리표를 arbitrary functions로 dumping 하는 것과 비슷하다.
+  * multiplexers
+  * decoders
+* Two-level programmable logic
+  * PALs
+  * PLAs
+  * ROMs
+
+## 4.1 Random logic
+
