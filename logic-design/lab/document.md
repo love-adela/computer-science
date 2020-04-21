@@ -336,6 +336,7 @@ endmodule
 ```
 
 * Process
+
   * The body of a process consists of procedural statement to make desired outputs from inputs as like a common programming.
   * Processes run in **parallel**.
   * **initial**
