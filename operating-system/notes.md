@@ -855,6 +855,9 @@ Valid한 것인데 아직 physical로 올리지 않는 경우도 있음.
 
 디스크 IO로 없이 해결할 수 있는 Page faults. Heap, Stack이 그 예다.
 
+---
+# 6주차 화요일
+
 ## Paging : Pros
 
 * No external fragmentation
