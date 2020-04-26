@@ -1,4 +1,4 @@
-# computer-science
+# computer science
 
 과목          | 교재 | 
 -------------|-----|
