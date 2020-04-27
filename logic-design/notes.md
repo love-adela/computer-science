@@ -833,7 +833,8 @@ Static behavior
 
 ## Combinational Logic Technologies
 
-[개요] 
+[개요]
+
 * Standard gates (random logic)
   * gate packages
   * cell libraries
@@ -846,4 +847,10 @@ Static behavior
   * ROMs
 
 ## 4.1 Random logic
+
+Week 7 : Mon
+===
+
+## Case1 : BCD to 7-segment display controller
+
 
