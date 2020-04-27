@@ -992,3 +992,74 @@ Process의 context가 필요하기 때문에 address space id 가 같은 프로�
   * entry를 많이 만들어서 늘릴 수 있음
   * superpage를 사용
     * 단점 : memory fragmentation이 심해진다. (4kb, 2mb를 섞어 쓰기 때문에..)
+
+  
+## Load Example
+
+## Integrating VM and Cache (1)
+
+* Physically addressed cache
+  * Allows multiple processes to have blocks in cache
+* Virtual addressed, virtually tagged cache
+  * Problem
+    * Homonymn Problem (동명이인 문제)
+    * Address Synonym or aliases problem
+      * 어떤 프로세스가 X라는 주소로 값을 저장할 때, 다른 프로세스가 Y라는 주소를 조회하면 그 값이 나옴.
+
+## Integrating VM and Cache (3)
+
+page size : 4kb , cache lock 32b, 64b이므로 lookup과 Cache lookup을 동시에 할 수 없다. 
+
+* 메모리를 load 할 때 OS가 끼어들 수 없기 때문에 하드웨적으로 해결해야 하는데.
+
+## Memory Mapping
+
+Virtual Memory에 관련된 여러가지 트릭이 있다.
+
+Virtual address space에 공간이 더이상 남아있지 않으면 Physical memory 공간이 많아도 더이상 쓸 수 없다. 32비트 컴퓨터에서는 virtual address space를 아껴써야 하는 문제가 있었다.
+
+Code : static data
+`brk()`, `stack()` 시스템 콜로 Heap의 크기를 조절.
+
+Anonymous Pages (대표적으로 heap과 stack이 있음): 
+
+이를 위해 OS에서 memory Mapping을 제공한다.
+
+### 
+여러가지 트릭들:
+- File : 원본이 파일에 있는 애들 중에서 파일에 있는걸 VA로 Access
+- GPU 같은 디바이스의 메모리를 virtual address 에 접근할 수 있도록 mampping 할 수 있다. 
+- Shared Memory
+
+
+### File Mapping vs Anonymous mapping
+
+- Anonymous mapping은 0으로 반드시 초기화를 해줘야 함. 
+  - Privacy 문제 때문에 초기화 해야 함. 다른 프로세스가 쓰던 데이터를 볼 수 없게 만들어야 하기 때문에, 
+  - VA 0번 주소에 unused space가 없으면 Null point 접근인지 의도적인 접근인지 모름.
+
+- Zero page mapping
+
+### Shared vs Private Mapping
+
+둘다 여러개의 프로세스가 동일한 맵핑을 share 할 수 있음.
+
+### mmap()
+
+호출 프로세스에 필요한 virtual address space에 새로 맵핑을 만든다.
+
+### Memory-Mapped File: Example
+
+magic number... 'F'에 해당하는 아스키코드가 필요함.
+
+### implementation
+
+mmap으로 File을 2k 읽어도 4K가 Physical Address에 들어오게 된다.
+
+### File I/O Comparisons
+
+system call
+
+## Summary : Memory - Mapped File
+
+Code는 read-only 하면되는데 Data는 private mapping 함. 데이터는 프로세스마다 고쳐쓸 때마다 원본을 해치지 않게 됨. 
