@@ -2,22 +2,23 @@
 
 ## 1. Instruction Set Architecture(ISA)
 
-1.1 Interface
+### 1.1 Interface
 
 [인터페이스](https://en.wikipedia.org/wiki/Interface_(computing))는 독립적이고 종종 관련이 없는 시스템이 서로 만나고 작용하거나 소통하는 공간을 뜻한다.
-따라서 필요한 정보만 두개 이상의 시스템에 최소한으로 드러내고 나머지는 숨김으로써 각 컴포넌트가 효율적으로 통신할 수 있다. 이 역할은 추상자료형(ADT, Abstract Data Type)이 수행한다. ADT는 특정 구현 방식까지 정의하진 않지만 데이터 값과 그와 관련된 연산의 집합을 정의한다. 대신 데이터값의 집합(상태, state)이나 연산이 내부적으로 어떻게 구현되었는지 드러내지 않는다. 스택(Stack)이 추상자료형의 예다. 스택에 연산(`push()`, `pop()`, `is_empty()`, `create_stack()`, `destroy_stack()`)을 수행할 때 메모리에 어떤 변화가 일어나는지 사람이 몰라도 되기 때문이다.
+따라서 필요한 정보만 두개 이상의 시스템에 최소한으로 드러내고 나머지는 숨김으로써 각 컴포넌트가 효율적으로 통신할 수 있다. 이 역할은 추상자료형(ADT, Abstract Data Type)이 수행한다. ADT는 특정 구현 방식까지 정의하진 않지만 데이터 값과 그와 관련된 연산의 집합을 정의한다. 대신 데이터값의 집합(상태, state)이나 연산이 내부적으로 어떻게 구현되었는지 드러내지 않는다. 
 
-* 참고
-  * Levels of Abstraction (Computer)
+스택(Stack)이 추상자료형의 예다. 스택에 연산(`push()`, `pop()`, `is_empty()`, `create_stack()`, `destroy_stack()`)을 수행할 때 메모리에 어떤 변화가 일어나는지 사람이 몰라도 되기 때문이다.
+
+* Levels of Abstraction (Computer)
     * Devices → Circuits → Microarchitecture → Instruction Set Architecture → Language → Algorithms → Problems
 
-1.2 Instruction Set Architecture (ISA)
+### 1.2 Instruction Set Architecture (ISA)
 
 ISA는 하드웨어와 소프트웨어 간의 인터페이스다. 인간이 해당 CPU의 ISA 체계에 맞는 소프트웨어 코드를 작성하면, 해당 ISA를 따르는 CPU가 코드를 읽고 명령된 동작들을 수행한다.
 
 **x86-64**는 Intel CPU의 ISA로 ARM의 ISA와 함께 세계적으로 가장 많이 사용된다.
 
-1.3 Instruction Set Architecture as an ADT
+### 1.3 Instruction Set Architecture as an ADT
 
 앞서 ADT 정의에 따라 ISA는 ADT의 적절한 예시다. CPU의 내부 구현 방식까지 정의하진 않고 있지만, 레지스터와 메모리 값을 조작하는데 필요한 연산과 명령어를 정의한다.
 
@@ -25,11 +26,11 @@ ISA는 하드웨어와 소프트웨어 간의 인터페이스다. 인간이 해�
 
 ## 2. 디자인 기법(Design Technique)
 
-**디자인기법**
+* **디자인기법**
 
 디자인기법이 사용되는 영역은 공학방법론(Engineering methodology), 정확성 기준(Correctness criteria), 평가 방법(Evaluation methods), 기술 경향(Technology trends)이 있다.
 
-**메모리/IO 시스템의 동작방식**
+* **메모리/IO 시스템의 동작방식**
 
 프로그램은 선형으로 실행되기 때문에, 앞으로 읽을 거리가 정해져 있다. 한정된 캐시 안에 instruction(code), data에 접근하는 패턴이 각각 다르기 때문에 원치 않는 캐시가 지워지는 문제가 발생한다. 이를 막기 위해 캐시를 분리한다.
 
