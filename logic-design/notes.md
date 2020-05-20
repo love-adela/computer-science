@@ -854,3 +854,39 @@ Week 7 : Mon
 ## Case1 : BCD to 7-segment display controller
 
 
+ALU : Arithmetic logic unit
+
+Week 8 : Mon
+
+### Sequential logic circuits
+
+* Circuits with feedback
+  * outpus = 
+    *  
+
+
+# 2020-05-11
+
+Comparison of latches and flip-flops(FFs)
+v`
+
+Week 10, Mon
+---
+
+## Counters are simple finite state machines
+
+## 어떻게하면 state diagram(FSM)을 logic으로 바꿀 수 있을까?
+
+* Counter
+
+  - 3 flip-flop으로 state를 저장한다.
+  - 다음 state를 연산하는 조합논리를 만든다
+    - 클락 period는 다음 state를 연산할 때보다 길어야 한다.
+  - flip-flop memory가 바뀔 때 클락시그널을 제어한다.
+  
+# Basic FSM Approach
+
+## 0-Step Design Approach
+
+* Problem Statement
+  * Synchrnous FSM with sequence detector. 
