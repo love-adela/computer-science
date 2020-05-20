@@ -1,4 +1,4 @@
-수업 : http://csl.snu.ac.kr/courses/4190.307/2020-1/
+수업 : ht tp://csl.snu.ac.kr/courses/4190.307/2020-1/
 
 ---
 
@@ -1063,3 +1063,65 @@ system call
 ## Summary : Memory - Mapped File
 
 Code는 read-only 하면되는데 Data는 private mapping 함. 데이터는 프로세스마다 고쳐쓸 때마다 원본을 해치지 않게 됨. 
+
+
+* Memory-Mapped File
+
+  * Pros
+
+  * Cons
+
+Shared Memory
+
+Swapping
+
+여태까지는 물리적인 메모리에 다 있다고 가정했다. 프로세스가 늘어남에 따라 물리적인 메모리를 사용하는건 한계가 생긴다. 그때 virtual memory를 사용하는데, 이 역시 ~ 라는 한계가 있따.
+
+- swapping : 안 쓰는 건 디스크로 뺀다.
+
+Memory Hierarchy
+- 빠르고 비싼건 조금만 쓰기
+  - registers가 제일 빠르다.
+    - 16GB 밖에 사용하지 못함.
+  - 그 다음 cache memory를 L1, L2, L3로 만들어놓고 쓴다.
+  - Main memory 사용 ... 수 ns로 상대적으로 빠르다.
+- 값싸고 느린건 용량을 늘이기
+  - Disk Storage ... 수 ms 로 상대적으로 느리다.
+    - SSD로 바뀌어서 속도를 조금 향상시키긴 했지만 위의 것들에 비하면 여전히 느림.
+    - 하지만 TB 단위로 사용할 수 있다는 장점이 있음.
+
+Consider physical memory as a cache 
+
+How to Swap
+
+- Overlay
+  - 도스시절에도 사용하던 것. OS와 독립적으로 사용할 수 있음.
+- Process-level swapping
+  - OS가 맡아서 한다.
+- Page-level swapping
+  - OS가 맡아서 한다.
+  - page 단위로 왔다갔다 한다. 사실상 swapping이라기보다는 paging 이라고 하지만, 역사적으로 swapping이라고 칭하긴 함.
+
+Where to Swap
+
+- Swap space
+  - 4kb 씩 저장하는 공간
+
+When to Swap
+
+- 다 찰 때까지 기다렸다가 스왑하는 방식
+
+Swapping in Linux
+
+3개의 water mark가 있다. 
+- high, low, min
+
+* Daemon : 백그라운드에서 돌아가는 프로세스나 스레드
+* kswapd(kernel swap daemon): 커널이 스와핑을 위해서 깨우는 데몬
+
+What to Swap
+
+* physical memory에 있는 것 중에서 swap이 안되는 것들이 있다. 
+* 프로세스가 많아지면 같이 많아지나 그렇게까지 사용되진 않고, Page cache pages 가 용량이 많음.
+
+
