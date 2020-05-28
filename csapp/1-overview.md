@@ -139,3 +139,8 @@ SSD 용량도 마찬가지로 늘어나고 있다. 자세한 내용은 market re
 2.6.4 Hard Disk Drive (HDD) Trends
 
 HDD 용량도 늘어나고 있다. 반면 단위가격이 점점 싸지고 있다.
+
+본 강의에 대한 학습 자료 및 필기는 다음에서 참고하였습니다.
+
+* http://archi.snu.ac.kr/courses/under/17_fall_computer_architecture/
+* https://it-eldorado.tistory.com/
