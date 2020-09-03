@@ -59,7 +59,7 @@ while (i >0) {
 
 ```
 // Functional Programming
-def sum(n) = 
+def sum(n) =
     if (n <= 0)
         0
     else
@@ -129,7 +129,7 @@ CS는 복잡한 영역을 다루게 되고, 점점 더 도메인이 고도화될
 
 Q. Unit은 뭔가요?
 
-A. 가능한 값이 하나 뿐인 Singleton set. 값을 주긴 줘야 하는데 주고 싶지 않을 때는 Unit을 사용한다. 
+A. 가능한 값이 하나 뿐인 Singleton set. 값을 주긴 줘야 하는데 주고 싶지 않을 때는 Unit을 사용한다.
 (Python NoneType과 비슷함.) 정보량이 0. Unit의 타입은 하나 밖에 없는데, 이를 리턴하는 수 밖에 없다.
 
 Q. C에서의 void와 같나요?
@@ -137,3 +137,97 @@ Q. C에서의 void와 같나요?
 A. C에서 void를 리턴하는게 스칼라에서 Unit을 리턴하는 것과 같은데, void(공집합)라는 이름이 적절하지 않다.
 
 void라는 이름은 마치 공집합을 반환한다는것처럼 해석되는데, 만약 정말로 공집합을 리턴한다면 이건 가능한 값이 없는 타입을 리턴한다는 뜻이다. 예를들어 exit() 함수나 exec() 함수처럼 리턴을 안하는 함수가 여기에 해당한다. `a = exit(1)`, `a = exec("asd")` 이렇게 코딩할경우 `a`에는 값이 절대 안들어옴. 이런 타입이 공집합이고, 스칼라에선 scala.Nothing이라고 부른다. Bottom type이라고 부름.
+
+## Part 1. Functional Programming with Function Applications
+
+### 1.1 Values, Names, Functions, and Evaluations
+
+* value: primitive하기도 하고 새로운 데이터타입에 따라 정의되기도 한다.
+* type: set of values
+  * 미리 정의된 타입 :
+    * int : {-214783648, ..., -1, 0, 1, ..., 2147483647} // 32-bit
+    * double : 64bit floating point numbers // real numbers in practice
+    * boolean: {true, false}
+    * string
+    * ...
+  * 모든 expression에 타입을 붙일 수 있다.
+    ```
+    foo -> ((x:Int)x):Int
+    ```
+* Expressions
+  * values, names, primitive operations(`+`, `*`), 등의 조합
+* Name -> 중요
+  * 복잡한 Expression이 있을 때 value를 빼서 이름을 붙이는 것.
+  * identify가 목적이다.
+    * expression의 이름은 a, b
+        ```
+        def a = 1 + (2 + 3) // 6
+        def b = 3 + a * 4  // 27
+        b
+        ```
+  * 본질적으로 Function에서 파라미터를 전달하는 등의 역할을 하기도 한다.
+  * 중요! a 라는 이름을 붙이면 바꿀 수 없다. storage가 아니기 때문이다.
+    ```
+    val a: Int = 1+2 // a는 1+2를 가리킨다. (저장x)
+    ```
+  * b가 가리키는 것이 value일수도 있고 expression일 수 있다. 모드가 따로 있으므로 프로그래머가 취사선택하여 expression으로 표현할 수 있다.
+
+* 메모
+  * functional programming에서는 같은 변수에 값을 덮어 씌우는 방식을 사용하지 않는다. 이는 imperative programming에 해당함.
+
+* Evaluation
+  * Reducing an expression into a value
+  * Strategy
+    * Take a name and operator (outer to inner)
+    * (name) Replace the name with its associated expression
+    * (name) Evaluate the expression
+    * (operator) Evaluate its operands (left to right)
+    * (operator) Apply the operator to its operands
+  * Example
+        ```
+        // b를 만나기 전까지 5를 계산
+        // b를 definition에 의해 (3+a*4)로 replace.
+        // 다시 a를 definition에 의해 replace.
+        5 + b ~ 5 +(3+a*4) ~ 5 +(3+(1+(2+3))*4) ~ ... ~ 32
+        ```
+  * operation을 할 때의 우선순위를 명시적으로 정의하기 때문에 괄호를 사용해야 한다. 이외로는 우선순위가 내부적으로 정해져있음.
+
+## 1.2 Functions and Substitution
+
+* Functions -> 중요
+  * Name을 generalize한 것으로 확장된 개념임.
+  * 파라미터가 있는 Expression을 가리키는 이름임.
+  * Name에 바인딩할 수 있다.
+    * Name 이기 때문에 바뀌지 않는다.
+    * storage 아님.
+        ```
+        // f는 expression을 가리키는 이름.
+        def f(x:Int): Int = x + a
+        ```
+  * 패턴을 만드는 것
+
+* Evaluation by substitution
+  * ...
+  * (function) Evaluate its operands (left to right)
+  * (function)
+    * Replace the function application by the expression of the function
+    * Replace its parameters with the operands
+
+## 1.3 Simple Recursion
+
+Imperative programming에서 loop이 없으면 실행시키고 싶은 횟수만큼 코드를 반복해서 써야 한다. 조금씩 다른 계산이 되기 때문에 변수에 값이 업데이트 되는 특징이 있다.
+
+* Recursion
+  * Use X in the definition of X
+  * Powerful mechanism for repitition
+  * Nothing special but just rewriting
+  * 패턴을 반복시키는 것
+
+```
+// 함수 이름이 함수 본인 body에 다시 나타날 수 있다.
+def sum(n:Int): Int =
+  if (n<=0)
+    0
+  else
+    n + sum(n-1) // n이 expression으로 치환된다.
+```
