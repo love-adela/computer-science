@@ -206,6 +206,9 @@ void라는 이름은 마치 공집합을 반환한다는것처럼 해석되는�
         ```
   * 패턴을 만드는 것
 
+* substitution
+  * 함수형 프로그래밍의 핵심
+
 * Evaluation by substitution
   * ...
   * (function) Evaluate its operands (left to right)
@@ -230,4 +233,107 @@ def sum(n:Int): Int =
     0
   else
     n + sum(n-1) // n이 expression으로 치환된다.
+```
+
+## 1.4 Termination / Divergence
+
+끝나지 않는 연산
+
+* Termination: 하나의 값으로 reduce 되는 식
+* Divergence: 영원히 reduce 하는 식
+
+```scala
+def loop:
+  Int = loop // Nothing = loop
+```
+
+### 1.5 Evaluation Strategy: Call-by-value, Call-by-name
+
+실행하면 같은 값으로 나올까? 대부분 같은데 다를 수 있다.
+
+* Call by value
+  * 먼저 argument에 대입해서 계산하고 적용한다.
+  * 장점: argument 식을 한 번만 계산한다.
+  * 단점: 무한 loop에 빠질 수 있다.
+  * syntax: by default
+  * `val a = 1 + 2 + 3`
+    * expression을 먼저 evaluate하고 그 다음 이름에 바인딩함.
+    * val이나 field 사용함.
+
+* Call by name
+  * evaluating 하지 않고도 argument에 함수를 적용한다.
+  * 장점: 함수가 argument를 사용하지 않을 때 대입해서 계산하지 않는다.
+  * syntax: `=>`
+    * `def one(x:Int, y: => Int) = 1`
+  * `def x = e`
+    * 함수 정의에 주로 사용된다.
+    * def나 method 사용함.
+
+### 1.6 Conditional Expressions
+
+* if - else
+  * if (b) e1 else e2
+  * b : Boolean expression
+  * e1, e2 : expression of the same type
+
+* Rewrite rules
+  * if (true) e1 else e2 -> e1
+  * if (false) e1 else e2 -> e2
+
+```scala
+def abs(x: Int):Int = if (x >= 0) x else -x
+```
+
+### 1.7 Boolean Expressions
+
+결과를 boolean으로 내는 식
+
+* `true`, `false`
+* `!b` // negation
+* `b && b` // call-by-value && call-by-name
+* `b || b`
+* `e <= e`, `e >= e`, `e < e`, `e > e`, `e == e`, `e != e`
+
+rewrite rules
+
+* `!true` -> `false`
+* `!false` -> `true`
+* `true` && `b` -> b // 첫번째가 true면 b가 계산
+* `false` && `b` -> false // 첫번째가 false면 b가 계산되지 않음
+* `true` || `b` -> true
+* `false` || `b` -> b
+
+write two functions by yourself
+
+* `and(x, y)` == x && y
+
+```scala
+def and (x:Boolean, y:=>Boolean) = 
+  if (x) y else false
+```
+
+* `or(x, y)` == x || y
+
+```scala
+def or(x:Boolean, y:=>Boolean) =
+  if (x) true else y
+```
+
+calculate square roots with Newton's method
+
+```scala
+def improve(guess:Double, x:Double) =
+  (guess + x/guess) / 2
+
+def isGoodEnough(guess:Double, x:Double) =
+  ((guess*guess/x) >= 0.9) &&
+  ((guess*guess/x) <= 1.1)
+  ??? // guess * guess is 99.9% close to x
+
+// recursive 함수일 때는 무조건 user가 return type을 써준다.
+def sqrtIter(guess:Double, x:Double) : Double =
+  is (isGoodEnough(guess, x)) guess
+  else sqrtIter(improve(guess, x), x)
+
+def sqrt(x:Double): Double = sqrtIter(guess=1, x)
 ```
