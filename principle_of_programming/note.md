@@ -19,9 +19,9 @@ technical한 내용보다는 사용자 관점에서 이해하기 좋은 원리�
     > Type class가 거의 모든 OOP보다 나아요.
 4. Imperative Programming with Memory Updates
 
-## Imperative vs Functional Programming
+## 0. Introduction: Imperative vs Functional Programming
 
-### Imperative Programming
+### 0.1 Imperative Programming
 
 * 한 줄 한 줄 실행하는 방식
 * 메모리에서 값을 읽어옴 -> 계산 -> 다시 메모리에 씀
@@ -44,7 +44,7 @@ while (i >0) {
 }
 ```
 
-### Functional Programming
+### 0.2 Functional Programming
 
 * 기본적으로 계산의 결과를 declarative하게 **what to do**를 기술하는 것이 주 목적.
 * 메모리 없이 순전히 값의 흐름으로 연산을 할 수 있다. 연산할 때마다 변수 선언을 하지 않으니까.
@@ -66,7 +66,7 @@ def sum(n) =
         n + sum(n-1)
 ```
 
-### Both Imperative & Functional Style Supported
+### 0.3 Both Imperative & Functional Style Supported
 
 * 많은 언어가 Imperative 스타일과 Functional 스타일로 짤 수 있다는 특징이 있다.
   * More imperative : Jave, Javescript, C++, Python, Rust, ...
@@ -79,21 +79,21 @@ def sum(n) =
 
 * 하나의 알고리즘이나 코드에서 imperative하거나 functional한 스타일을 동시에 사용할 수 있음.
 
-## Why Scala?
+### 0.4 Why Scala?
 
 * Imperative, Functional 스타일을 둘다 지원한다.
 * OOP와 Typeclass를 둘다 지원한다다
 * Java와 호환이된다. Java 라이브러리를 다 쓸 수 있고 서로 링크할 수 있다.
 * 프로그래밍은 협업. 남이 이해할 수 있는 코드를 짜는 것이 중요하기 때문에 스칼라를 활용하는 것도 좋은 방법임.
 
-## Object Oriented Programming
+### 0.5 Object Oriented Programming
 
 * OOP: 프로그램을 짤 때 모듈별로 잘게 쪼개서 추상화 등 목적에 맞게금 쓰이도록 프로그래밍을 관리할 수 있음.
 * OOP의 Classes / Objects는 data + methods(ie, functions)
 * 인터페이스와 구현을 분리할 수 있다. 사용자에게 구현 디테일을 숨기고 프로그래밍이 가능하게 한다.
   * 핸들을 돌리고, 앞으로 나가는 등의 조작을 할 뿐이지 차가 어떻게 그런 작동하는지는 다 몰라도 된다. 현대차, 테슬라, 포르쉐 등 어떤 차를 몰더라도 기본적인 조작은 같 듯, 코드 재활용을 할 수 있다. 구현을 바꿔가며 Linking이 가능함.
 
-```
+```scala
 class Point(x:Int, y:Int) {
     //data
     val px: Int = x
@@ -138,7 +138,7 @@ A. C에서 void를 리턴하는게 스칼라에서 Unit을 리턴하는 것과 �
 
 void라는 이름은 마치 공집합을 반환한다는것처럼 해석되는데, 만약 정말로 공집합을 리턴한다면 이건 가능한 값이 없는 타입을 리턴한다는 뜻이다. 예를들어 exit() 함수나 exec() 함수처럼 리턴을 안하는 함수가 여기에 해당한다. `a = exit(1)`, `a = exec("asd")` 이렇게 코딩할경우 `a`에는 값이 절대 안들어옴. 이런 타입이 공집합이고, 스칼라에선 scala.Nothing이라고 부른다. Bottom type이라고 부름.
 
-## Part 1. Functional Programming with Function Applications
+## 1. Functional Programming with Function Applications
 
 ### 1.1 Values, Names, Functions, and Evaluations
 
@@ -151,25 +151,31 @@ void라는 이름은 마치 공집합을 반환한다는것처럼 해석되는�
     * string
     * ...
   * 모든 expression에 타입을 붙일 수 있다.
+
     ```
     foo -> ((x:Int)x):Int
     ```
+
 * Expressions
   * values, names, primitive operations(`+`, `*`), 등의 조합
 * Name -> 중요
   * 복잡한 Expression이 있을 때 value를 빼서 이름을 붙이는 것.
   * identify가 목적이다.
     * expression의 이름은 a, b
-        ```
+
+        ```scala
         def a = 1 + (2 + 3) // 6
         def b = 3 + a * 4  // 27
         b
         ```
+
   * 본질적으로 Function에서 파라미터를 전달하는 등의 역할을 하기도 한다.
   * 중요! a 라는 이름을 붙이면 바꿀 수 없다. storage가 아니기 때문이다.
-    ```
+
+    ```scala
     val a: Int = 1+2 // a는 1+2를 가리킨다. (저장x)
     ```
+
   * b가 가리키는 것이 value일수도 있고 expression일 수 있다. 모드가 따로 있으므로 프로그래머가 취사선택하여 expression으로 표현할 수 있다.
 
 * 메모
@@ -184,15 +190,16 @@ void라는 이름은 마치 공집합을 반환한다는것처럼 해석되는�
     * (operator) Evaluate its operands (left to right)
     * (operator) Apply the operator to its operands
   * Example
-        ```
+        ```scala
         // b를 만나기 전까지 5를 계산
         // b를 definition에 의해 (3+a*4)로 replace.
         // 다시 a를 definition에 의해 replace.
         5 + b ~ 5 +(3+a*4) ~ 5 +(3+(1+(2+3))*4) ~ ... ~ 32
         ```
+
   * operation을 할 때의 우선순위를 명시적으로 정의하기 때문에 괄호를 사용해야 한다. 이외로는 우선순위가 내부적으로 정해져있음.
 
-## 1.2 Functions and Substitution
+### 1.2 Functions and Substitution
 
 * Functions -> 중요
   * Name을 generalize한 것으로 확장된 개념임.
@@ -200,7 +207,8 @@ void라는 이름은 마치 공집합을 반환한다는것처럼 해석되는�
   * Name에 바인딩할 수 있다.
     * Name 이기 때문에 바뀌지 않는다.
     * storage 아님.
-        ```
+
+        ```scala
         // f는 expression을 가리키는 이름.
         def f(x:Int): Int = x + a
         ```
@@ -216,7 +224,7 @@ void라는 이름은 마치 공집합을 반환한다는것처럼 해석되는�
     * Replace the function application by the expression of the function
     * Replace its parameters with the operands
 
-## 1.3 Simple Recursion
+### 1.3 Simple Recursion
 
 Imperative programming에서 loop이 없으면 실행시키고 싶은 횟수만큼 코드를 반복해서 써야 한다. 조금씩 다른 계산이 되기 때문에 변수에 값이 업데이트 되는 특징이 있다.
 
@@ -226,7 +234,7 @@ Imperative programming에서 loop이 없으면 실행시키고 싶은 횟수만�
   * Nothing special but just rewriting
   * 패턴을 반복시키는 것
 
-```
+```scala
 // 함수 이름이 함수 본인 body에 다시 나타날 수 있다.
 def sum(n:Int): Int =
   if (n<=0)
@@ -235,7 +243,7 @@ def sum(n:Int): Int =
     n + sum(n-1) // n이 expression으로 치환된다.
 ```
 
-## 1.4 Termination / Divergence
+### 1.4 Termination / Divergence
 
 끝나지 않는 연산
 
@@ -336,4 +344,128 @@ def sqrtIter(guess:Double, x:Double) : Double =
   else sqrtIter(improve(guess, x), x)
 
 def sqrt(x:Double): Double = sqrtIter(guess=1, x)
+```
+
+## 2. Blocks and Name Scoping
+
+* Expression: 이름(Name)은 정의된 환경에서 의미가 바뀌지 않는게 guarantee됨.
+  * [Variable Shadowing](https://en.wikipedia.org/wiki/Variable_shadowing)를 하면 이름에 대한 의미가 바뀌는게 아니라, 이름이 가리키는 대상이 달라짐.
+  
+  ```python
+  x = 0
+
+  def outer():
+      x = 1
+
+      def inner():
+          x = 2
+          print("inner:", x) # 2
+
+      inner()
+      print("outer:", x)     # 1
+
+  outer()
+  print("global:", x)        # 0
+  ```
+
+  * 이름이 정의될 때마다 rewrite에 추가된다.
+* Environment: 실행은 typechecker가 찾은 환경에서 오류 없이 돌게 됨.
+  * parameter에 expression을 붙이면서 계속 continue 하는 식.
+
+1960년대에는 잘 몰라서 dynamic scoping을 했었음.
+
+## 2.1 Blocks in Scala
+
+Block의 특성
+
+* Expression이다.
+* Nested name binding 허용함.
+* 임의 순서의 `def` 사용을 허용하지만 `val`은 허용하지 않는다.
+  * 스칼라에선 def 문의 순서는 바꿔도 결과가 같지만 val 문의 순서는 바꾸면 결과가 달라질 수 있다.
+
+```scala
+{ val x1 = e1
+  def x2 = e2
+  e
+}
+```
+
+### 2.1.2 Scope of names
+
+Block
+
+```scala
+val t = 0
+def f(x:Int) = t + g(x)
+def g(x:Int) = x * x
+val x = f(5)
+val r = {
+  val t = 10
+  val s = f(5)
+  s - t
+}
+t+r
+```
+
+* block 안의 정의는 block 안에서만 접근 가능하다.
+* block 안의 정의는 block 밖의 같은 name의 정의를 shadowing 한다.
+* 정의는 shadowing 되지 않으면 중첩 block에서도 접근가능하다.
+* 함수는 함수가 정의되는 environment에서 evaluate 되고 invoked 되는 곳에서는 evaluate 되지 않는다.
+
+## 2.2 Rewriting for Blocks
+
+```scala
+val t = 0
+def f(x:Int) = t + g(x)
+def g(x:Int) = x*x
+val x = f(5)
+val r = {
+  val t = 10
+  val s = f(5)
+  s - t }
+t + r
+```
+
+Evaluation with Environment
+: 같은 block 안에 같은 name을 두 번 정의할 수 없음.
+
+[]
+**1** ~ [t=0],
+**2** ~ [..., f=(x)t+g(x)],
+**3** ~ [..., g=(x)x*x],
+**4** ~ [..., x=25],
+**5** ~ [...]:[],
+**6** ~ [...]:[t=10],
+**7** ~ [...]:[..., s=25],
+**8** ~ [..., r=15],
+**9** ~ [...], 15
+
+4: [t=0, f=..., g=...]: [x=5], t+g(x) ~ 0+g(5) ~ 25
+g(5): [t=0, f=..., g=...]:[x=5], x*x ~ 5*5 ~25
+7: [t=0, f=..., g=..., x=25]:[x=5], t+g(x) ~ 0+g(5) ~ 25
+g(5): [t=0, f=..., g=..., x=25]:[x=5], x * x ~ 5*5 ~ 25
+
+## 2.3 Example: def with no arguments
+
+```scala
+{
+val t = 0
+def x = t + t // 인자가 없는 함수 , is essentially same as def x() = t+t
+val r = {
+  val t = 10
+  x          // is treated as x(), 0
+  }
+}
+```
+
+```scala
+// equivalent 하게 만들기
+{
+val t = 0
+def x(): Int = t + t
+val r : Int = {
+  val t = 10
+  x()
+  }
+}
 ```
