@@ -644,3 +644,228 @@ printf("입력한 수는 %d과 %d입니다.\n", a, b);
     * 함수 안에서 선언된 변수
     * 자동 초기화되지 않음
     * 쓰레기값(garbage value)
+
+## 8.4 데이터형
+
+### 8.4.1 자료형(Data Type)
+
+* 저장하는 데이터의 크기에 따라 필요한 메모리 공간의 크기가 다르다.
+* 데이터 종류에 따라 변수의 종류를 다르게 하는 것이 효율적이다.
+* 적절한 자료형을 사용하면 메모리가 절약되고 실행 속도도 향상된다.
+
+1. 자료형의 종류
+
+* `short`, `int`, `long`, `long`: 정수형 데이터
+* `double`, `float`: 실수형 데이터
+* `char`: 문자형 데이터
+
+1.1 정수형
+
+* 부호 있음
+datatype | description | byte | range
+---------|-------------|------|-------
+short | short형 정수 | 2 | -32768 ~ 32767
+int | 정수 | 4 | -2147483648 ~ 2147483647
+long | long형 정수 |4 | -2147483648 ~ 2147483647
+longlong | . | 8 | -9,223,372,036,854,775,808 ~ 9,223,372,036,854,775,807
+
+      * short는 short int의 줄임
+      * long은 long int의 줄임
+      * long int 32비트 CPU에서 4바이트, 64비트 윈도우에서 4바이트, 64비트 리눅스에선 8바이트
+      * long long int // 거의 항상 8바이트
+
+* 부호 없음
+datatype | description | byte | range
+---------|-------------|------|-------
+unsigned short | 부호 없는 short형 정수 | 2 | 0 ~ 65535
+unsigned int | 부호 없는 정수 | 4 | 0 ~ 4294967295
+unsigned long | 부호 없는 long형 정수 | 4 | 0 ~ 4294967295
+
+1.2 문자형
+
+1.2.1 아스키코드
+
+* 문자는 컴퓨터보다는 인간에게 중요하다.
+* 문자도 숫자를 이용하여 표현한다.
+* 공통적인 규격이 필요해 ASCII(American Standard Code for Information Interchange) 코드 탄생
+
+* 부호 있음
+datatype | description | byte | range
+---------|-------------|------|-------
+char | 문자 및 정수 | 1 | -128 ~ 127
+
+* 부호 없음
+datatype | description | byte | range
+---------|-------------|------|-------
+unsigned char | 문자 및 부호 없는 정수 | 0 ~ 255
+
+1.2.2 제어 문자
+
+* print할 목적이 아니라 제어할 목적으로 사용되는 문자들
+
+제어문자 | 이름 | 의미
+-------|------|----
+\0     | 널문자 | 문자열의 끝 표시
+\a     | 경고(bell) | "삐"하는 경고음 발생
+\b     | backspace | 커서를 현재의 위치에서 한 글자 뒤로 옮김
+\t     | horizontal tab | 커서의 위치를 현재 라인에서 설정된 다음 탭 위치로 옮김
+\n     | newline | 커서를 다음 라인의 시작 위치로 옮김
+\v     | vertical tab | 설정되어 있는 다음 수직 탭 위치로 커서를 이동
+\f     | form feed | 주로 프린터에서 강제적으로 다음 페이지로 넘길 때 사용
+\r     | carriage return | 커서를 현재 라인의 시작 위치로 옮김
+\"     | 큰따옴표 | "
+\'     | 작은따옴표 | '
+\\     | back slash | \
+
+1.3. 실수형
+
+실수 표현 방법에는 고정 소수점 방식과 부동소수점 방식이 있다.
+
+1.3.1 고정소수점(Fixed Point)
+
+* 소수점 위치를 고정시키고 정수부와 소수부를 나누어 표현한다.
+
+1.3.2 부동소수점(Floating Point)
+
+* 컴퓨터에서 실수는 부동소수점형으로 표현한다.
+* 과학자들이 많이 사용하는 과학적 표기법과 유사하다.
+  * 1.495 (실수의 정밀도) * 10^5 (실수의 표현 범위)
+
+datatype | description | byte | range
+------------|-------------|------|-------
+float       | 단일정밀도 부동소수점 | 4 | 1.2E-38 ~ 3.4838
+double      | 두배정밀도 부동소수점 | 8 | 2.2E-308 ~ 1.8E308
+long double | 두배정밀도 부동소수점 | 8 | 2.2E-308 ~ 1.8E308
+
+      * long double은 CPU마다 다르고 보통은 double과 같음. 간혹 (아주 옛날 CPU에서) 80bit floating point 일 때가 있음.
+
+### 8.4.2 자료형 크기
+
+      CPU 상관 없이 무조건 성립하는거:
+      * char 는 무조건 1바이트
+      * signed, unsigned 크기에 영향 안준다.
+      * char <= short <= int <= long <= long long 이것도 항상 성립한다.
+
+* `sizeof()`: 자료형의 크기(byte 단위) 반환하는 연산자
+* 예시:
+  * `sizeof(x)` // 변수
+  * `sizeof(10)` // 값
+  * `sizeof(int)` // 자료형
+
+### 8.4.3 선언
+
+1. 정수형 선언
+
+* `short grade;` // short형 변수 선언
+* `int count;` // int형 변수 선언
+* `long distance;` // long형 변수 선언
+
+2. 문자형 선언
+
+* `char c;`
+* `char answer;`
+* `char code;`
+
+* char 형의 변수에 문자를 저장하려면 아스키코드 값을 대입하면 된다.
+  * `code = 65;` // 'A' 저장
+  * `code = 'A';`
+
+```c
+/* 문자 변수와 문자 상수 */
+#include <stdio.h>
+
+int main(void) {
+  char c1 = 'A';
+  char c2 = 65;
+
+  // 서로 같은 값이 출력된다.
+  printf("문자 상수 초기화 = %c \n", c1);
+  printf("아스키코드 초기화 = %c \n", c2);
+  
+  return 0;
+}
+```
+
+*참고* 문자열은 `%s`로 표현할 것.
+
+### 8.4.4 출력 형식 지정자
+
+1. 정수형
+
+* 기본 형식 지정자: `%d`
+
+```c
+int data = 5;
+
+printf("%d\n", data);    // 5
+printf("%5d\n", data);   //     5
+printf("%5.2d\n", data); //    05
+```
+
+2. 실수형
+
+* 기본 형식 지정자: `%f`
+* 기본: 소수점 6자리까지만 출력된다.
+
+```c
+double d = 0.123456789;
+
+printf("%f\n", d);      // 0.123457 
+printf("%10.8f\n", d);  // 0.12345679
+printf("%10.3f\n", d);  //      0.123
+```
+
+## 8.5 Overflow와 Underflow
+
+### 8.5.1 Overflow
+
+* 변수가 나타낼 수 있는 범위를 넘는 숫자를 저장하려고 할 때 발생
+* 정수형에서 오버플로우 발생하면 경고가 없다.
+
+```c
+/* 정수형에서의 Overflow */
+#include <stdio.h>
+#include <limits.h>
+
+int main(void) {
+  short s = SHART_MAX; // 최대값(32767)
+  unsigned short us = USHART_MAX; // 최대값(65535)
+
+  printf("s=%d\n", s);
+  s += 1 // 오버플로우가 발생한다.
+  printf("s=%d\n", s);
+  printf("us=%d\n", us);
+  us += 1 // 오버플로우가 발생한다.
+  printf("us=%d\n", us);
+  return 0;
+}
+```
+
+```c
+/* 실수형에서의 overflow */
+#include <stdio.h>
+
+int main(void {
+  float x = 1239;
+  printf("x=%e\n", x);
+  return 0;
+}
+```
+
+### 8.5.2 Underflow
+
+* 부동 소수점 수가 너무 작아서 표현하기 힘든 상황
+
+```c
+#include <stdio.h>
+
+int main(void) {
+  float x = 1.23456e-38;
+  float y = 1.23456e-46; // 언더플로우 발생
+  double z = 1.23456e-46;
+  printf("x = %e\n", x);
+  printf("y = %e\n", y);
+  printf("z = %e\n", z);
+  return 0;
+}
+```
