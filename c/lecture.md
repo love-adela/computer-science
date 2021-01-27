@@ -1398,3 +1398,166 @@ if (score>= 80) {
     fee = fee - 5000;
   }
   ```
+## 12. Switch문 기본구조
+
+### 12.1 개요
+
+#### 12.1.1 Switch문
+
+조건식의 값에 따라서 여러 경로 중에 하나를 선택할 수 있는 제어 구조
+
+* Switch문
+  * 조건식의 값에 따라서 여러 경로 중 하나를 선택할 수 있는 제어 구조
+  * 다중 분기
+  * 여러 개의 if else 문을 대신하여 간결하게 작성할 때 사용하는 조건문
+  * switch 문 기본 형식
+  ```c
+  switch (조건값) {
+    case1: 명령문1;
+      break;
+    case2: 명령문2;
+      break;
+    case3: 명령문3;
+      break;
+    caseN: 명령문N;
+      break;
+    default: 명령문d;
+  }
+  ```
+  * case문 하나 이상 반드시 있어야 한다.
+  * case 순서는 순서대로 나열하지 않아도 된다. 3 - 1 - 2 순으로 나열해도 에러 X.
+  * 조건값
+    * 정수상수
+    * 문자상수
+    * 수식의 결과로 나오는 정수상수
+    * 단, 실수상수(1.2)나 문자열상수('1')는 사용불가
+  
+  ```c
+  double d;
+  switch (d) { // 잘못된 표현. 실수는 switch문에서 사용이 불가능하다.
+    case 0.1: 
+      명령문1;
+  }
+  ```
+  * case문에서 중괄호 사용
+    * 일반적으로 필요 없다.
+    * 특정 case에서만 사용되는 변수 선언 시 필요하다.
+  
+  ```c
+  int n;
+  switch(n) {
+    case 2: {
+      int sec = 3;
+      ...
+    }
+    ....
+  }
+  ```
+
+* default 문
+  * 조건값과 일치하는 case가 없을 때 사용
+  * 생략 가능
+  
+  ```c
+  int n = 3;
+  switch(n) {
+    case2: printf("2\n");
+      break;
+    case1: printf("1\n");
+      break;
+    default: printf("error");
+  }
+
+#### 12.1.2 Switch문과 다른 If문과 If-Else문
+
+* If문
+  * 조건식의 값에 따라서 두 경로 중 하나를 선택할 수 있는 제어 구조
+  * 이중 분기
+  * if else 문이 중첩되어 있으면 가독성이 떨어짐
+  * if 문 기본 형식
+    ```c
+    명령문1;
+    if (조건식) {
+      명령문 2;
+      명령문 3;
+    } 명령문 4;
+    ```
+
+* If - Else If 문
+  * if else if 문 기본 형식
+  ```c
+  if (조건식 1) {
+    명령문1;
+  } else if (조건식 2) {
+    명령문2;
+  } else if (조건식 3) {
+    명령문3;
+  } else {
+    명령문4;
+  } 명령문5;
+  * 여러 번 비교하게 된다.
+  * 프로그램의 제어 구조가 복잡해진다.
+
+#### 12.1.3 Switch문에서의 Break문
+
+12.1.3.1 기본 개념
+
+* Switch 문 : case문은 break문으로 끝난다.
+* break 문 : switch문을 빠져나간다.
+
+```c
+int n = 2;
+switch(n) {
+  case2: printf("2\n");
+    break;
+  case1: printf("1\n");
+    break;
+  default: printf("error");
+}
+```
+* Case문이 break문으로 끝나지 않으면
+  * 선택된 Case문 안의 명령문들이 실행된 다음, (break문이 있는 경우 break문을 만날 때까지) 계속해서 아래의 명령문이 실행된다.
+
+```c
+int n = 2;
+switch(n) {
+  case2: printf("2\n");
+  case1: printf("1\n");
+  default: printf("Error");
+}
+```
+
+12.1.3.2. break문 생략
+
+* 고의적인 생략 예제 1
+
+```c
+// 1~5까지 정수를 받아 별 출력
+scanf("%d", &n);
+switch(n) {
+  case5: printf("*****\n");
+    break;
+  case4: printf("****\n");
+    break;
+  case3: printf("***\n");
+    break;
+  case2: printf("**\n");
+    break;
+  case1: printf("*\n");
+    break;
+  default: printf("error");
+  }
+```
+
+* 고의적인 생략 예제 2
+
+```c
+// 사용자의 등급을 받아 등급의 권한을 알려줌
+scanf("%d", &level);
+switch(level) {
+  case0: printf("delete 권한 있음\n");
+  case1: printf("write 권한 있음\n");
+  case2: printf("read 권한 있음\n");
+    break;
+  default: printf("error");
+}
