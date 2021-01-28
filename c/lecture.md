@@ -1515,6 +1515,7 @@ switch(n) {
   default: printf("error");
 }
 ```
+
 * Case문이 break문으로 끝나지 않으면
   * 선택된 Case문 안의 명령문들이 실행된 다음, (break문이 있는 경우 break문을 만날 때까지) 계속해서 아래의 명령문이 실행된다.
 
