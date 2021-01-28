@@ -1398,6 +1398,7 @@ if (score>= 80) {
     fee = fee - 5000;
   }
   ```
+
 ## 12. Switch문 기본구조
 
 ### 12.1 개요
@@ -1562,3 +1563,124 @@ switch(level) {
     break;
   default: printf("error");
 }
+
+## 12.2 Switch문과 If문
+
+### 12.2.1 If문을 Switch문으로 변경
+
+12.2.1.1 if - else if 문의 형식
+
+* block 구조로 되어있다.
+
+```c
+scanf("%d", &m);
+if (m == 1) {
+  printf("과일 선택 \n");
+} else if (m == 2) {
+  printf("만두 선택 \n");
+} else if (m == 3) {
+  printf("우유 선택 \n");
+} else if (m == 4) {
+  printf("과자 선택 \n");
+} 
+  else {
+} printf("껌 선택 \n");
+```
+
+12.2.1.2 switch문 의 형식
+
+```c
+scanf("%d", &m);
+
+switch (m) {
+  case 1: printf("과일 선택");
+          break;
+  case 2: printf("만두 선택");
+          break;
+  case 3: printf("우유 선택");
+          break;
+  case 4: printf("과자 선택");
+          break;
+  case 5: printf("껌 선택");
+          break;
+  default: 1에서 5까지의 숫자만 입력하세용.;
+}
+```
+
+12.2.1.3 if문을 switch문으로 변경
+
+* 여러 개의 다중 조건 처리를 해야 하는 경우 if문 대신 switch문을 사용하면 좀 더 깔끔하게 코드를 정리할 수 있다.
+* 분기문이 많을 경우 switch를 사용하는 것이 좋다.
+* 코드 길이를 줄일 수 있고 가독성이 좋다.
+* switch문을 사용할 때 default문을 사용하는게 좋다.
+* 모든 if문을 switch문으로 변경 가능한 것은 아니다.
+
+12.2.1.4 switch문을 if문으로 변경
+
+* if문은 모두 switch문으로 변경할 수 없다.
+* switch문은 모두 if문으로 변경할 수 있다.
+
+```c 
+// 1~5까지 입력 받아 홀수/짝수를 출력하는 프로그램의 예
+scanf("%d", &m);
+switch (m) {
+  case 2:
+  case 4: printf("짝수\n");
+    break;
+  case 1:
+  case 3:
+  case 5: printf("홀수\n");
+    break;
+  default: printf("1~5까지의 수만 입력하세요.\n");
+}
+```
+
+```c
+scanf("%d", &m);
+if (m == 2 || m == 4) {
+  printf("짝수\n");
+else if (m == 1 || m == 3 || m == 5) {
+  printf("홀수\n");
+else {
+  printf("1~5까지의 정수만 입력하세요.\n");
+}
+```c
+
+```c
+// 정수 하나를 받아 홀수/짝수를 출력하는 프로그램의 예
+scanf("%d", &m);
+switch (m % 2) {
+  case 0: printf("짝수\n");
+          break;
+  case 1: printf("홀수\n");
+          break;
+  default: printf("Error\n");
+}
+```
+
+```c
+scanf("%d", &m);
+if (m % 2 == 0) {
+  printf("짝수\n");
+else {
+  printf("홀수\n");
+}
+```
+
+### 12.2.2 goto statement
+
+* 조건 없이 특정 위치로 점프하게 만드는 제어문
+* 그러나 goto문은 사용하지 말 것
+  * 프로그램의 자연스러운 흐름을 방해해한다.
+  * 가독성을 낮춘다.
+  * 디버깅이 어렵다.
+
+```c
+int main(void) {
+  A: // A라는 이름의 레이블 
+  ... 
+  goto A:
+  ...
+}
+
+```
