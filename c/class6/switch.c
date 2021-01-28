@@ -2,18 +2,22 @@
 
 int main(void) {
   int n;
+  printf("1에서 4 사이의 정수를 입력하세요\n");
   scanf("%d", &n);
   switch (n) {
     case 1:
-      printf("1번 \n");
+      printf("melon\n");
       break;
     case 2:
-      printf("2번 \n");
+      printf("apple\n");
       break;
     case 3:
-      printf("3번 \n");
+      printf("grape\n");
       break;
-    default: printf("1에서 3 사이의 정수를 입력하세요:");
+    case 4:
+      printf("watermelon\n");
+      break;
+    default: printf("1에서 4 사이의 정수만 입력하세요:");
   }
   return 0;
 }
