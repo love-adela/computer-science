@@ -1214,7 +1214,7 @@ int main(void) {
   * PortA ~ F는 0 ~ 7까지 8개, PortG는 0~4까지 5개의 핀으로 구성된다.
 
 * ATmega128 I/O 포트와 핀 구성
-포트 | 비트 | 핀 
+포트 | 비트 | 핀
 ----|-----|------------
 PortA | 8bit | PA0 ~ PA7
 PortB | 8bit | PB0 ~ PB7
@@ -1312,7 +1312,7 @@ PF7 (bit 7) | ADC 입력 채널 7번, JTAG 데이터 입력 핀
   * 양방향 5비트 포트이며 기타 설명은 PortA와 같음
   * Port G의 다른 기능
 
-기능 | 설명 
+기능 | 설명
 -----|--------
 /WR (bit 0) | Write data, 외부 데이터 메모리를 쓰기 위한 strobe 제어 신호
 /RD (bit 1) | Read data, 외부 데이터 메모리를 읽기 위한 strobe 제어 신호
@@ -1329,3 +1329,6 @@ PG4 (bit 4) | TOSC1, Real-Time Clockd을 위한 타이머/카운터 0, ASSR 레�
 범용 I/O 포트와 관계된 레지스터 | 입력 핀 | PINx
 특수 기능 입출력 | . | SFIOR
 
+## 8. LED I/O 회로 설계
+
+### 8.1 LED I/O 
